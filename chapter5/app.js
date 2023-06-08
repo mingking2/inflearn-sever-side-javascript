@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    res.send('Login please');
+    res.send('<h1>Login please</h1>');
   })
 
 app.listen(port, () => {
