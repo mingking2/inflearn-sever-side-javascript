@@ -5,7 +5,8 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Document
     body 
-        h1 Server Side JavaScript 
+        h1 
+            a(href='/topic') Server Side JavaScript 
         ul  
             each topic in topics 
                 li
@@ -13,4 +14,7 @@ html(lang="en")
         article 
             h2= title 
             = description
+
+        div     
+            a(href='/topic/new') new
         
