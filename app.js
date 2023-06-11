@@ -1,10 +1,12 @@
-const express = require('express');
-const app = express();
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
 app.locals.pretty = true;
-const port = 3000;
-app.set('view engine', 'jade');
+var port = 3000;
+app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(express.static('public'));
+app.get(bodyParser.urlencoded({ extended: false }));
 
 app.get('/form',(req, res) => {
   res.render('form');
@@ -14,9 +16,15 @@ app.get('/form_receiver', (req, res) => {
   var title = req.query.title;
   var description = req.query.description;
   res.send(title+','+description);
+}) 
+
+app.post('/form_recevier', (req, res) => {
+  var title = req.body.title;
+  var description = req.body.description;
+  res.send(title+','+description)
 })
 
-app.get('/topic/:id', (req, res) => {
+app.get('/topic', (req, res) => {
   // res.send(req.query.id+','+req.query.name);
   var topics = [
     'Javascript is...',
@@ -27,7 +35,7 @@ app.get('/topic/:id', (req, res) => {
     <a href="/topic?id=0">JavaScript</a><br>
     <a href="/topic?id=1">Nodejs</a><br>
     <a href="/topic?id=2">Express</a><br><br>
-    ${topics[req.params.id]} 
+    ${topics[req.query.id]} 
   `
   // 시멘틱 url 쓸려면 params 안쓰면 query
   res.send(output);
@@ -38,7 +46,7 @@ app.get('/topic/:id/:mode', (req, res) => {
 })
 
 app.get('/template', (req, res) => {
-  res.render('temp', {time: Date(), _title: 'Jade'});
+  res.render('temp', {time: Date(), _title: 'pug'});
 })
 app.get('/', (req, res) => {
   res.send('Hello home page!');
