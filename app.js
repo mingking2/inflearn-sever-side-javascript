@@ -1,12 +1,12 @@
 var express = require('express');
-var bodyParser = require('body-parser');
 var app = express();
 app.locals.pretty = true;
 var port = 3000;
 app.set('view engine', 'pug');
 app.set('views', './views');
 app.use(express.static('public'));
-app.get(bodyParser.urlencoded({ extended: false }));
+app.use(express.json()) // for parsing application/json
+app.use(express.urlencoded({ extended: false })) // for parsing application/x-www-form-urlencoded
 
 app.get('/form',(req, res) => {
   res.render('form');
@@ -24,7 +24,7 @@ app.post('/form_recevier', (req, res) => {
   res.send(title+','+description)
 })
 
-app.get('/topic', (req, res) => {
+app.get('/topic/:id', (req, res) => {
   // res.send(req.query.id+','+req.query.name);
   var topics = [
     'Javascript is...',
@@ -32,9 +32,9 @@ app.get('/topic', (req, res) => {
     'Express is...'
   ];
   var output = `
-    <a href="/topic?id=0">JavaScript</a><br>
-    <a href="/topic?id=1">Nodejs</a><br>
-    <a href="/topic?id=2">Express</a><br><br>
+    <a href="/topic/0">JavaScript</a><br>
+    <a href="/topic/1">Nodejs</a><br>
+    <a href="/topic/2">Express</a><br><br>
     ${topics[req.query.id]} 
   `
   // 시멘틱 url 쓸려면 params 안쓰면 query
