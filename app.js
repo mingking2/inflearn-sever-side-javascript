@@ -6,7 +6,7 @@ app.set('view engine', 'jade');
 app.set('views', './views');
 app.use(express.static('public'));
 
-app.get('/topic', (req, res) => {
+app.get('/topic/:id', (req, res) => {
   // res.send(req.query.id+','+req.query.name);
   var topics = [
     'Javascript is...',
@@ -17,9 +17,14 @@ app.get('/topic', (req, res) => {
     <a href="/topic?id=0">JavaScript</a><br>
     <a href="/topic?id=1">Nodejs</a><br>
     <a href="/topic?id=2">Express</a><br><br>
-    ${topics[req.query.id]}
+    ${topics[req.params.id]} 
   `
+  // 시멘틱 url 쓸려면 params 안쓰면 query
   res.send(output);
+})
+
+app.get('/topic/:id/:mode', (req, res) => {
+  res.send(req.params.id+','+req.params.mode);
 })
 
 app.get('/template', (req, res) => {
