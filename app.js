@@ -6,6 +6,16 @@ app.set('view engine', 'jade');
 app.set('views', './views');
 app.use(express.static('public'));
 
+app.get('/form',(req, res) => {
+  res.render('form');
+})
+
+app.get('/form_receiver', (req, res) => {
+  var title = req.query.title;
+  var description = req.query.description;
+  res.send(title+','+description);
+})
+
 app.get('/topic/:id', (req, res) => {
   // res.send(req.query.id+','+req.query.name);
   var topics = [
