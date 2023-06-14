@@ -1,12 +1,14 @@
 var express = require('express');
 var session = require('express-session');
 // bodyParer 는 이제 안불러와도댐
+var FileStore = require('session-file-store')(session);
 var app = express();
 app.use(express.urlencoded({ extended: false }))
 app.use(session({
     secret: '24535436543@##$@!',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: new FileStore()
 }));
 app.get('/count', function(req, res) {
     if(req.session.count) {
