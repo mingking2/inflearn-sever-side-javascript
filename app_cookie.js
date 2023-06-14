@@ -40,6 +40,24 @@ app.get('/cart/:id', function(req, res) {
     cart[id] = parseInt(cart[id]) + 1;
     res.cookie('cart', cart);
     res.redirect('/cart');
+});
+
+app.get('/cart', function(req, res) {
+    var cart = req.cookies.cart;
+    if(!cart) {
+        res.send('Empty!');
+    } else {
+        var output = '';
+        for(var id in cart) {
+            output += `<li>${products[id].title} (${cart[id]})</li>`;
+        }
+    }
+
+    res.send(`
+    <h1>Cart</h1>
+    <ul>${output}</ul>
+    <a href="/products">Products List</a>
+    `);
 })
 
 app.get('/count', function(req, res){
